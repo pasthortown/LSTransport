@@ -1,0 +1,73 @@
+<nav class="sidebar" [ngClass]="{ sidebarPushRight: isActive, collapsed: collapsed }">
+   <div class="list-group">
+      <a [routerLink]="['/main']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+         <i class="fas fa-tachometer-alt"></i>&nbsp; <span>Main</span>
+      </a>
+      <div class="nested-menu">
+         <a class="list-group-item" (click)="addExpandClass('bdd base')">
+            <span class="fas fa-database"></span>&nbsp;BDD BASE
+         </a>
+         <li class="nested" [class.expand]="showMenu === 'bdd base'">
+            <ul class="submenu">
+               <li>
+                  <a [routerLink]="['/transport']" [routerLinkActive]="['router-link-active']" class="list-group-item">Transport </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/driver']" [routerLinkActive]="['router-link-active']" class="list-group-item">Driver </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/passenger']" [routerLinkActive]="['router-link-active']" class="list-group-item">Passenger </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/transport_picture']" [routerLinkActive]="['router-link-active']" class="list-group-item">TransportPicture </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/route']" [routerLinkActive]="['router-link-active']" class="list-group-item">Route </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/transport_document']" [routerLinkActive]="['router-link-active']" class="list-group-item">TransportDocument </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/binnacle']" [routerLinkActive]="['router-link-active']" class="list-group-item">Binnacle </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/passenger_binacle']" [routerLinkActive]="['router-link-active']" class="list-group-item">PassengerBinacle </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/report']" [routerLinkActive]="['router-link-active']" class="list-group-item">Report </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/report_state']" [routerLinkActive]="['router-link-active']" class="list-group-item">ReportState </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/report_response']" [routerLinkActive]="['router-link-active']" class="list-group-item">ReportResponse </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/account_rol']" [routerLinkActive]="['router-link-active']" class="list-group-item">AccountRol </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/account_rol_assigment']" [routerLinkActive]="['router-link-active']" class="list-group-item">AccountRolAssigment </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/transport_document_attachment']" [routerLinkActive]="['router-link-active']" class="list-group-item">TransportDocumentAttachment </a>
+               </li>
+            </ul>
+         </li>
+      </div>
+      <div class="nested-menu">
+         <a class="list-group-item" (click)="addExpandClass('profile')">
+            <span><img class="rounded-circle" src="{{profileImg}}" width="32px" height="32px"></span>&nbsp;<small *ngIf="refreshUser()">{{ user.name }}</small>
+         </a>
+         <li class="nested" [class.expand]="showMenu === 'profile'">
+            <ul class="submenu">
+               <li>
+                  <a [routerLink]="['/profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">Perfil </a>
+               </li>
+               <li>
+                  <a [routerLink]="['/login']" (click)="logOut()"><span>&nbsp;Cerrar Sesión</span></a>
+               </li>
+            </ul>
+         </li>
+      </div>
+   </div>
+</nav>

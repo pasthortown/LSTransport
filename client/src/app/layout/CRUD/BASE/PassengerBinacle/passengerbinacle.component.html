@@ -1,0 +1,137 @@
+<div class="row">
+   <h1 class="col-12 text-right">
+      PassengerBinacle
+   </h1>
+</div>
+<div class="row">
+   <div class="col-12">
+      <div class="btn-toolbar" role="toolbar">
+         <div class="btn-group mr-2" role="group">
+            <button type="button" class="btn btn-primary" title="Actualizar" (click)="goToPage(currentPage)"><i class="fas fa-sync"></i></button>
+         </div>
+         <div class="btn-group mr-2" role="group">
+            <button type="button" title="Nuevo" class="btn btn-success" (click)="newPassengerBinacle(content)"><i class="fas fa-file"></i></button>
+            <button type="button" title="Editar" class="btn btn-warning" (click)="editPassengerBinacle(content)"><i class="fas fa-edit"></i></button>
+         </div>
+         <div class="btn-group mr-2" role="group">
+            <button type="button" title="Eliminar" class="btn btn-danger" (click)="deletePassengerBinacle()"><i class="fas fa-trash"></i></button>
+         </div>
+         <div class="btn-group mr-2" role="group">
+            <button type="button" title="BackUp" class="btn btn-dark" (click)="backup()"><i class="fas fa-download"></i></button>
+            <button type="button" title="Exportar CSV" class="btn btn-dark" (click)="toCSV()"><i class="fas fa-file-csv"></i></button>
+            <button type="button" title="Cargar" class="btn btn-dark" (click)="uploadInput.click()"><i class="fas fa-upload"></i></button>
+            <input [hidden]="true" type="file" class="form-control" #uploadInput (change)="decodeUploadFile($event)" accept=".json"/>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-12">
+      <table class="table table-hover mt-2">
+         <thead>
+            <tr>
+               <th>Seleccionado</th>
+               <th>time_start</th>
+               <th>time_end</th>
+               <th>aboard</th>
+               <th>address_start</th>
+               <th>address_end</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let passenger_binacle of passenger_binacles" (click)="selectPassengerBinacle(passenger_binacle)">
+               <td class="text-right"><span *ngIf="passenger_binacleSelected === passenger_binacle" class="far fa-hand-point-right"></span></td>
+               <td>{{passenger_binacle.time_start}}</td>
+               <td>{{passenger_binacle.time_end}}</td>
+               <td>{{passenger_binacle.aboard}}</td>
+               <td>Lat: {{passenger_binacle.address_start_latitude}} Lng: {{passenger_binacle.address_start_longitude}}</td>
+               <td>Lat: {{passenger_binacle.address_end_latitude}} Lng: {{passenger_binacle.address_end_longitude}}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+<div class="row">
+   <div class="col-12">
+      <div class="btn-toolbar" role="toolbar">
+         <div class="btn-group mr-2" role="group">
+            <button type="button" class="btn btn-light" *ngIf="currentPage === 1" title="Primera Página" disabled>Primera</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage !== 1" title="Primera Página" (click)="goToPage(1)">Primera</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage > 1" title="Página Anterior" (click)="goToPage((currentPage*1) - 1)">{{(currentPage * 1) - 1}}</button>
+            <button type="button" class="btn btn-primary" title="Página Actual">{{currentPage}}</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage < lastPage" title="Página Siguiente" (click)="goToPage((currentPage*1) + 1)">{{(currentPage * 1) + 1}}</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage !== lastPage" title="Última Página" (click)="goToPage(lastPage)">Última</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage === lastPage" title="Última Página" disabled>Última</button>
+         </div>
+         <div class="input-group">
+            <div class="input-group-prepend">
+               <button type="button" class="input-group-text btn btn-success" title="Ir a la Página" (click)="goToPage(goToPageNumber.value)">Ir a</button>
+            </div>
+            <input type="number" min="{{1}}" max="{{lastPage}}" class="form-control" placeholder="Ir a la Página" #goToPageNumber>
+         </div>
+      </div>
+   </div>
+</div>
+<ng-template #content let-modal>
+   <div class="modal-header">
+      <h4 class="modal-title">Datos:</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+         <span>&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <div class="row">
+         <div class="col-12">
+            <div class="form-group row">
+               <label for="time_start" class="col-4 col-form-label">time_start</label>
+               <div class="col-8">
+                  <input type="text" class="form-control" id="time_start" name="time_start" placeholder="timeStart" [(ngModel)]="passenger_binacleSelected.time_start">
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="time_end" class="col-4 col-form-label">time_end</label>
+               <div class="col-8">
+                  <input type="text" class="form-control" id="time_end" name="time_end" placeholder="timeEnd" [(ngModel)]="passenger_binacleSelected.time_end">
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="aboard" class="col-4 col-form-label">aboard</label>
+               <div class="col-8">
+                  <label class="switch"><input type="checkbox"id="aboard" name="aboard" [(ngModel)]="passenger_binacleSelected.aboard"><span class="slider round"></span></label>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="address_start" class="col-4 col-form-label">address_start</label>
+               <div class="col-8">
+                  <agm-map class="col-12" style="height: 200px;"[latitude]="passenger_binacleSelected.address_start_latitude * 1" [longitude]="passenger_binacleSelected.address_start_longitude * 1" [zoom]="15" (mapClick)="address_startEvent($event)">
+                     <agm-marker [latitude]="passenger_binacleSelected.address_start_latitude * 1" [longitude]="passenger_binacleSelected.address_start_longitude * 1" [markerDraggable]="true" (dragEnd)="address_startEvent($event)" [animation]="'DROP'"></agm-marker>
+                  </agm-map>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="address_end" class="col-4 col-form-label">address_end</label>
+               <div class="col-8">
+                  <agm-map class="col-12" style="height: 200px;"[latitude]="passenger_binacleSelected.address_end_latitude * 1" [longitude]="passenger_binacleSelected.address_end_longitude * 1" [zoom]="15" (mapClick)="address_endEvent($event)">
+                     <agm-marker [latitude]="passenger_binacleSelected.address_end_latitude * 1" [longitude]="passenger_binacleSelected.address_end_longitude * 1" [markerDraggable]="true" (dragEnd)="address_endEvent($event)" [animation]="'DROP'"></agm-marker>
+                  </agm-map>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="passenger_id" class="col-4 col-form-label">Passenger</label>
+               <div class="col-8">
+                  <select class="form-control" id="passenger_id" name="passenger_id" [(ngModel)]="passenger_binacleSelected.passenger_id">
+                     <option value="0" selected>Seleccione...</option>
+                     <option *ngFor="let passenger of passengers" value={{passenger.id}}>
+                        {{passenger.id}}
+                     </option>
+                  </select>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success" (click)="modal.close('Guardar click')">Guardar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close('Cancelar click')">Cancelar</button>
+   </div>
+</ng-template>

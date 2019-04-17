@@ -1,0 +1,127 @@
+<div class="row">
+   <h1 class="col-12 text-right">
+      Passenger
+   </h1>
+</div>
+<div class="row">
+   <div class="col-12">
+      <div class="btn-toolbar" role="toolbar">
+         <div class="btn-group mr-2" role="group">
+            <button type="button" class="btn btn-primary" title="Actualizar" (click)="goToPage(currentPage)"><i class="fas fa-sync"></i></button>
+         </div>
+         <div class="btn-group mr-2" role="group">
+            <button type="button" title="Nuevo" class="btn btn-success" (click)="newPassenger(content)"><i class="fas fa-file"></i></button>
+            <button type="button" title="Editar" class="btn btn-warning" (click)="editPassenger(content)"><i class="fas fa-edit"></i></button>
+         </div>
+         <div class="btn-group mr-2" role="group">
+            <button type="button" title="Eliminar" class="btn btn-danger" (click)="deletePassenger()"><i class="fas fa-trash"></i></button>
+         </div>
+         <div class="btn-group mr-2" role="group">
+            <button type="button" title="BackUp" class="btn btn-dark" (click)="backup()"><i class="fas fa-download"></i></button>
+            <button type="button" title="Exportar CSV" class="btn btn-dark" (click)="toCSV()"><i class="fas fa-file-csv"></i></button>
+            <button type="button" title="Cargar" class="btn btn-dark" (click)="uploadInput.click()"><i class="fas fa-upload"></i></button>
+            <input [hidden]="true" type="file" class="form-control" #uploadInput (change)="decodeUploadFile($event)" accept=".json"/>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-12">
+      <table class="table table-hover mt-2">
+         <thead>
+            <tr>
+               <th>Seleccionado</th>
+               <th>phone_number</th>
+               <th>address_map</th>
+               <th>address</th>
+               <th>additional_info</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let passenger of passengers" (click)="selectPassenger(passenger)">
+               <td class="text-right"><span *ngIf="passengerSelected === passenger" class="far fa-hand-point-right"></span></td>
+               <td>{{passenger.phone_number}}</td>
+               <td>Lat: {{passenger.address_map_latitude}} Lng: {{passenger.address_map_longitude}}</td>
+               <td>{{passenger.address}}</td>
+               <td>{{passenger.additional_info}}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+<div class="row">
+   <div class="col-12">
+      <div class="btn-toolbar" role="toolbar">
+         <div class="btn-group mr-2" role="group">
+            <button type="button" class="btn btn-light" *ngIf="currentPage === 1" title="Primera Página" disabled>Primera</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage !== 1" title="Primera Página" (click)="goToPage(1)">Primera</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage > 1" title="Página Anterior" (click)="goToPage((currentPage*1) - 1)">{{(currentPage * 1) - 1}}</button>
+            <button type="button" class="btn btn-primary" title="Página Actual">{{currentPage}}</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage < lastPage" title="Página Siguiente" (click)="goToPage((currentPage*1) + 1)">{{(currentPage * 1) + 1}}</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage !== lastPage" title="Última Página" (click)="goToPage(lastPage)">Última</button>
+            <button type="button" class="btn btn-light" *ngIf="currentPage === lastPage" title="Última Página" disabled>Última</button>
+         </div>
+         <div class="input-group">
+            <div class="input-group-prepend">
+               <button type="button" class="input-group-text btn btn-success" title="Ir a la Página" (click)="goToPage(goToPageNumber.value)">Ir a</button>
+            </div>
+            <input type="number" min="{{1}}" max="{{lastPage}}" class="form-control" placeholder="Ir a la Página" #goToPageNumber>
+         </div>
+      </div>
+   </div>
+</div>
+<ng-template #content let-modal>
+   <div class="modal-header">
+      <h4 class="modal-title">Datos:</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')">
+         <span>&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <div class="row">
+         <div class="col-12">
+            <div class="form-group row">
+               <label for="phone_number" class="col-4 col-form-label">phone_number</label>
+               <div class="col-8">
+                  <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="phoneNumber" [(ngModel)]="passengerSelected.phone_number">
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="address_map" class="col-4 col-form-label">address_map</label>
+               <div class="col-8">
+                  <agm-map class="col-12" style="height: 200px;"[latitude]="passengerSelected.address_map_latitude * 1" [longitude]="passengerSelected.address_map_longitude * 1" [zoom]="15" (mapClick)="address_mapEvent($event)">
+                     <agm-marker [latitude]="passengerSelected.address_map_latitude * 1" [longitude]="passengerSelected.address_map_longitude * 1" [markerDraggable]="true" (dragEnd)="address_mapEvent($event)" [animation]="'DROP'"></agm-marker>
+                  </agm-map>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="address" class="col-4 col-form-label">address</label>
+               <div class="col-8">
+                  <input type="text" class="form-control" id="address" name="address" placeholder="address" [(ngModel)]="passengerSelected.address">
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="additional_info" class="col-4 col-form-label">additional_info</label>
+               <div class="col-8">
+                  <ck-editor id="additional_info" name="additional_info" skin="moono-lisa" [(ngModel)]="passengerSelected.additional_info"></ck-editor>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="user_id" class="col-4 col-form-label">User</label>
+               <div class="col-8">
+                  <select class="form-control" id="user_id" name="user_id" [(ngModel)]="passengerSelected.user_id">
+                     <option value="0" selected>Seleccione...</option>
+                     <option *ngFor="let user of users" value={{user.id}}>
+                        {{user.id}}
+                     </option>
+                  </select>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success" (click)="modal.close('Guardar click')">Guardar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close('Cancelar click')">Cancelar</button>
+   </div>
+</ng-template>
