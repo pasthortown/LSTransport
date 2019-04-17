@@ -26,6 +26,7 @@ class CreateBinnaclesTable extends Migration
           $table->string('address_end',1024)->nullable($value = true);
           $table->double('oddometer_start',8,2)->nullable($value = true);
           $table->double('oddometer_end',8,2)->nullable($value = true);
+          $table->double('price',8,2)->nullable($value = true);
           $table->unsignedInteger('transport_id');
           $table->foreign('transport_id')->references('id')->on('transports')->onDelete('cascade');
           $table->unsignedInteger('route_id');

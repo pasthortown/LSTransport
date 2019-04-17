@@ -44,6 +44,8 @@ class TransportController extends Controller
              $transport->id = 1;
           }
           $transport->plate = $result['plate'];
+          $transport->coorp = $result['coorp'];
+          $transport->code = $result['code'];
           $transport->save();
           $transport_documents_on_transport = $result['transport_documents_on_transport'];
           foreach( $transport_documents_on_transport as $transport_document) {
@@ -63,6 +65,8 @@ class TransportController extends Controller
           $result = $data->json()->all();
           $transport = Transport::where('id',$result['id'])->update([
              'plate'=>$result['plate'],
+             'coorp'=>$result['coorp'],
+             'code'=>$result['code'],
           ]);
           $transport = Transport::where('id',$result['id'])->first();
           $transport_documents_on_transport = $result['transport_documents_on_transport'];
@@ -127,11 +131,15 @@ class TransportController extends Controller
          if ($exist) {
            Transport::where('id', $result['id'])->update([
              'plate'=>$result['plate'],
+             'coorp'=>$result['coorp'],
+             'code'=>$result['code'],
            ]);
          } else {
           $transport = new Transport();
           $transport->id = $result['id'];
           $transport->plate = $result['plate'];
+          $transport->coorp = $result['coorp'];
+          $transport->code = $result['code'];
           $transport->save();
          }
          $transport = Transport::where('id',$result['id'])->first();

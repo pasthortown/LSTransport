@@ -167,4 +167,13 @@ $router->group(['middleware' => ['auth']], function () use ($router) {
    $router->put('/transportdocumentattachment', ['uses' => 'TransportDocumentAttachmentController@put']);
    $router->delete('/transportdocumentattachment', ['uses' => 'TransportDocumentAttachmentController@delete']);
    $router->post('/transportdocumentattachment/masive_load', ['uses' => 'TransportDocumentAttachmentController@masiveLoad']);
+
+   //CRUD Location
+   $router->post('/location', ['uses' => 'LocationController@post']);
+   $router->get('/location', ['uses' => 'LocationController@get']);
+   $router->get('/location/paginate', ['uses' => 'LocationController@paginate']);
+   $router->get('/location/backup', ['uses' => 'LocationController@backup']);
+   $router->put('/location', ['uses' => 'LocationController@put']);
+   $router->delete('/location', ['uses' => 'LocationController@delete']);
+   $router->post('/location/masive_load', ['uses' => 'LocationController@masiveLoad']);
 });

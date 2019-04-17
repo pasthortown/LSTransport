@@ -113,9 +113,9 @@ export class TransportComponent implements OnInit {
    toCSV() {
       this.transportDataService.get().then( r => {
          const backupData = r as Transport[];
-         let output = 'id;plate\n';
+         let output = 'id;plate;coorp;code\n';
          backupData.forEach(element => {
-            output += element.id; + element.plate + '\n';
+            output += element.id; + element.plate + ';' + element.coorp + ';' + element.code + '\n';
          });
          const blob = new Blob([output], { type: 'text/plain' });
          const fecha = new Date();

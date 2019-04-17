@@ -16,7 +16,9 @@ class CreateTransportsTable extends Migration
        Schema::create('transports', function (Blueprint $table) {
           $table->increments('id');
           $table->timestamps();
-          $table->string('plate',8)->nullable($value = true);
+          $table->string('plate',10)->nullable($value = true);
+          $table->string('coorp',20)->nullable($value = true);
+          $table->string('code',20)->nullable($value = true);
        });
     }
 

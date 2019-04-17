@@ -12,7 +12,7 @@ class Transport extends Model
      * @var array
      */
     protected $fillable = [
-       'plate',
+       'plate','coorp','code',
     ];
 
     /**

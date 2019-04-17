@@ -196,9 +196,9 @@ export class BinnacleComponent implements OnInit {
    toCSV() {
       this.binnacleDataService.get().then( r => {
          const backupData = r as Binnacle[];
-         let output = 'id;start;end;address_start_map_latitude;address_start_map_longitude;address_end_map_latitude;address_end_map_longitude;address_start;address_end;oddometer_start;oddometer_end;transport_id;route_id;driver_id\n';
+         let output = 'id;start;end;address_start_map_latitude;address_start_map_longitude;address_end_map_latitude;address_end_map_longitude;address_start;address_end;oddometer_start;oddometer_end;price;transport_id;route_id;driver_id\n';
          backupData.forEach(element => {
-            output += element.id; + element.start + ';' + element.end + ';' + element.address_start_map_latitude + ';' + element.address_start_map_longitude + ';' + element.address_end_map_latitude + ';' + element.address_end_map_longitude + ';' + element.address_start + ';' + element.address_end + ';' + element.oddometer_start + ';' + element.oddometer_end + ';' + element.transport_id + ';' + element.route_id + ';' + element.driver_id + '\n';
+            output += element.id; + element.start + ';' + element.end + ';' + element.address_start_map_latitude + ';' + element.address_start_map_longitude + ';' + element.address_end_map_latitude + ';' + element.address_end_map_longitude + ';' + element.address_start + ';' + element.address_end + ';' + element.oddometer_start + ';' + element.oddometer_end + ';' + element.price + ';' + element.transport_id + ';' + element.route_id + ';' + element.driver_id + '\n';
          });
          const blob = new Blob([output], { type: 'text/plain' });
          const fecha = new Date();

@@ -14,6 +14,7 @@ export class Binnacle {
    address_end: String;
    oddometer_start: number;
    oddometer_end: number;
+   price: number;
    transport_id: number;
    passenger_binacles_on_binnacle: PassengerBinacle[];
    route_id: number;

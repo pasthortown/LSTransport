@@ -18,5 +18,5 @@ export class MainPage implements OnInit {
     /*this.passengerSelected.address_map_latitude = event.coords.lat;
     this.passengerSelected.address_map_longitude = event.coords.lng;*/
     console.log(event);
- }
+  }
 }

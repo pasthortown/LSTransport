@@ -79,6 +79,10 @@ const routes: Routes = [
             loadChildren: './CRUD/BASE/TransportDocumentAttachment/transportdocumentattachment.module#TransportDocumentAttachmentModule'
          },
          {
+            path: 'location',
+            loadChildren: './CRUD/BASE/Location/location.module#LocationModule'
+         },
+         {
             path: 'blank',
             loadChildren: './blank-page/blank-page.module#BlankPageModule'
          },

@@ -55,6 +55,7 @@ class BinnacleController extends Controller
           $binnacle->address_end = $result['address_end'];
           $binnacle->oddometer_start = $result['oddometer_start'];
           $binnacle->oddometer_end = $result['oddometer_end'];
+          $binnacle->price = $result['price'];
           $binnacle->transport_id = $result['transport_id'];
           $binnacle->route_id = $result['route_id'];
           $binnacle->driver_id = $result['driver_id'];
@@ -90,6 +91,7 @@ class BinnacleController extends Controller
              'address_end'=>$result['address_end'],
              'oddometer_start'=>$result['oddometer_start'],
              'oddometer_end'=>$result['oddometer_end'],
+             'price'=>$result['price'],
              'transport_id'=>$result['transport_id'],
              'route_id'=>$result['route_id'],
              'driver_id'=>$result['driver_id'],
@@ -193,6 +195,7 @@ class BinnacleController extends Controller
              'address_end'=>$result['address_end'],
              'oddometer_start'=>$result['oddometer_start'],
              'oddometer_end'=>$result['oddometer_end'],
+             'price'=>$result['price'],
              'transport_id'=>$result['transport_id'],
              'route_id'=>$result['route_id'],
              'driver_id'=>$result['driver_id'],
@@ -210,6 +213,7 @@ class BinnacleController extends Controller
           $binnacle->address_end = $result['address_end'];
           $binnacle->oddometer_start = $result['oddometer_start'];
           $binnacle->oddometer_end = $result['oddometer_end'];
+          $binnacle->price = $result['price'];
           $binnacle->transport_id = $result['transport_id'];
           $binnacle->route_id = $result['route_id'];
           $binnacle->driver_id = $result['driver_id'];

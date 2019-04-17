@@ -12,7 +12,7 @@ class Binnacle extends Model
      * @var array
      */
     protected $fillable = [
-       'start','end','address_start_map_latitude','address_start_map_longitude','address_end_map_latitude','address_end_map_longitude','address_start','address_end','oddometer_start','oddometer_end',
+       'start','end','address_start_map_latitude','address_start_map_longitude','address_end_map_latitude','address_end_map_longitude','address_start','address_end','oddometer_start','oddometer_end','price',
     ];
 
     /**
